@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 import git
 from rich.console import Console
+from rich.table import Table
 
 console = Console()
 
@@ -22,16 +23,18 @@ def ensure_config_dir():
         with open(CONFIG_FILE, 'w') as f:
             json.dump({"repositories": []}, f)
 
-def add_repository(url):
+def add_repository(url, alias=None):
     ensure_config_dir()
     with open(CONFIG_FILE, 'r+') as f:
         config = json.load(f)
-        if url not in config['repositories']:
-            config['repositories'].append(url)
+        existing_repo = next((repo for repo in config['repositories'] if repo['url'] == url), None)
+        if not existing_repo:
+            new_repo = {'url': url, 'alias': alias} if alias else {'url': url}
+            config['repositories'].append(new_repo)
             f.seek(0)
             json.dump(config, f, indent=2)
             f.truncate()
-            console.print(f"Added repository: [bold green]{url}[/bold green]")
+            console.print(f"Added repository: [bold green]{url}[/bold green]" + (f" with alias [bold blue]{alias}[/bold blue]" if alias else ""))
         else:
             console.print(f"Repository already exists: [bold yellow]{url}[/bold yellow]")
 
@@ -56,8 +59,9 @@ def refresh_data():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     TEMP_DIR.mkdir(parents=True, exist_ok=True)    
     
-    for url in config['repositories']:
-        repo_name = url.split('/')[-1].replace('.git', '')
+    for repo in config['repositories']:
+        url = repo['url']
+        repo_name = repo.get('alias') or url.split('/')[-1].replace('.git', '')
         temp_dir = TEMP_DIR / repo_name
         
         if is_git_repo(url):
@@ -89,21 +93,43 @@ def refresh_data():
         if is_git_repo(url):
             shutil.rmtree(temp_dir)
 
+def count_data():
+    table = Table(title="Data Count")
+    table.add_column("Project", style="cyan", no_wrap=True)
+    table.add_column("Count", style="magenta")
+
+    total_count = 0
+    for project_dir in DATA_DIR.iterdir():
+        if project_dir.is_dir():
+            data_file = project_dir / 'data.jsonl'
+            if data_file.exists():
+                with open(data_file, 'r') as f:
+                    count = sum(1 for _ in f)
+                total_count += count
+                table.add_row(project_dir.name, str(count))
+
+    table.add_row("Total", str(total_count), style="bold")
+    console.print(table)
+
 def main():
     parser = argparse.ArgumentParser(description='Code Dataset CLI')
     subparsers = parser.add_subparsers(dest='command', help='Sub-command help')
 
     add_parser = subparsers.add_parser('add', help='Add a repository URL')
     add_parser.add_argument('url', type=str, help='Repository URL')
+    add_parser.add_argument('--alias', type=str, help='Alias for the repository', default=None)
 
     subparsers.add_parser('refresh', help='Refresh data from repositories')
+    subparsers.add_parser('count', help='Count data entries in all projects')
 
     args = parser.parse_args()
 
     if args.command == 'add':
-        add_repository(args.url)
+        add_repository(args.url, args.alias)
     elif args.command == 'refresh':
         refresh_data()
+    elif args.command == 'count':
+        count_data()
     else:
         parser.print_help()
 
