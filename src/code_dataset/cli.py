@@ -7,7 +7,7 @@ import git
 
 CONFIG_DIR = Path.home() / '.code_dataset'
 CONFIG_FILE = CONFIG_DIR / 'config.json'
-DATA_DIR = Path(__file__).parent.parent / 'data' / 'libs'
+DATA_DIR = Path(os.getcwd()) / 'data' / 'libs'
 
 def ensure_config_dir():
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
@@ -33,6 +33,8 @@ def refresh_data():
     with open(CONFIG_FILE, 'r') as f:
         config = json.load(f)
     
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    
     for url in config['repositories']:
         repo_name = url.split('/')[-1].replace('.git', '')
         temp_dir = Path('/tmp') / repo_name
@@ -50,7 +52,7 @@ def refresh_data():
             dest_dir = DATA_DIR / repo_name
             dest_dir.mkdir(parents=True, exist_ok=True)
             shutil.copy(source_file, dest_dir / 'data.jsonl')
-            print(f"Copied data from {repo_name}")
+            print(f"Copied data from {repo_name} to {dest_dir}")
         else:
             print(f"No data file found in {repo_name}")
         
