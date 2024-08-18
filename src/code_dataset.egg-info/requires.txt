@@ -1,1 +1,4 @@
 gitpython
+rich
+twine
+wheel

@@ -17,3 +17,6 @@ Classifier: Programming Language :: Python :: 3.9
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
 Requires-Dist: gitpython
+Requires-Dist: rich
+Requires-Dist: twine
+Requires-Dist: wheel
