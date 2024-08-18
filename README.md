@@ -46,10 +46,10 @@ The code-dataset tool provides three main commands:
 1. Add a repository:
 
 ```bash
-code-dataset add <repository_url>
+code-dataset add <repository_url> [--alias <alias_name>]
 ```
 
-This command is used to add a Git repository or local directory to the configuration.
+This command is used to add a Git repository or local directory to the configuration. You can optionally provide an alias for the repository using the `--alias` parameter.
 
 2. Refresh data:
 
@@ -75,7 +75,13 @@ This command counts the data entries in all projects and displays a summary tabl
 code-dataset add https://github.com/example/repo.git
 ```
 
-2. Add a local directory:
+2. Add a repository with an alias:
+
+```bash
+code-dataset add https://github.com/example/repo.git --alias my-repo
+```
+
+3. Add a local directory:
 
 ```bash
 code-dataset add /path/to/local/repo

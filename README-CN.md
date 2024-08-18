@@ -47,10 +47,10 @@ code-dataset 工具提供了两个主要命令：
 1. 添加仓库：
 
 ```bash
-code-dataset add <repository_url>
+code-dataset add <repository_url> [--alias <alias_name>]
 ```
 
-这个命令用于添加一个 Git 仓库或本地目录到配置中。
+这个命令用于添加一个 Git 仓库或本地目录到配置中。你可以使用 `--alias` 参数为仓库提供一个别名。
 
 2. 刷新数据：
 
@@ -68,7 +68,13 @@ code-dataset refresh
 code-dataset add https://github.com/example/repo.git
 ```
 
-2. 添加一个本地目录：
+2. 添加一个带有别名的仓库：
+
+```bash
+code-dataset add https://github.com/example/repo.git --alias my-repo
+```
+
+3. 添加一个本地目录：
 
 ```bash
 code-dataset add /path/to/local/repo
