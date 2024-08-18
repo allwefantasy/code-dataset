@@ -1,2 +1,6 @@
 gitpython
 rich
+
+# Development dependencies
+twine
+wheel
