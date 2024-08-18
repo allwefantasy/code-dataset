@@ -41,7 +41,7 @@ pip install code-dataset
 
 ### 🔧 Usage
 
-The code-dataset tool provides two main commands:
+The code-dataset tool provides three main commands:
 
 1. Add a repository:
 
@@ -58,6 +58,14 @@ code-dataset refresh
 ```
 
 This command fetches the latest data from all configured repositories and saves it to the local `data/libs` directory.
+
+3. Count data entries:
+
+```bash
+code-dataset count
+```
+
+This command counts the data entries in all projects and displays a summary table.
 
 ### 📚 Examples
 
@@ -84,8 +92,6 @@ code-dataset refresh
 ```bash
 code-dataset count
 ```
-
-This command counts the data entries in all projects and displays a summary table.
 
 ## Contribution
 
