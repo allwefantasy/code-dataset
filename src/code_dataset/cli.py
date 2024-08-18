@@ -6,6 +6,8 @@ from pathlib import Path
 import git
 from rich.console import Console
 from rich.table import Table
+from rich.panel import Panel
+from rich.syntax import Syntax
 
 console = Console()
 
@@ -111,6 +113,37 @@ def count_data():
     table.add_row("Total", str(total_count), style="bold")
     console.print(table)
 
+def show_data(project_name, num_entries=1):
+    project_dir = DATA_DIR / project_name
+    data_file = project_dir / 'data.jsonl'
+    
+    if not data_file.exists():
+        console.print(f"[bold red]Error:[/bold red] No data file found for project {project_name}")
+        return
+
+    with open(data_file, 'r') as f:
+        for i, line in enumerate(f):
+            if i >= num_entries:
+                break
+            
+            data = json.loads(line)
+            instruction = data.get('instruction', 'No instruction available')
+            conversations = data.get('conversations', [])
+            model = data.get('model', 'Unknown model')
+            yaml_file = data.get('yaml_file', 'No YAML file specified')
+
+            console.print(Panel(f"[bold blue]Entry {i+1}[/bold blue]"))
+            console.print(Panel(instruction, title="Instruction", expand=False))
+            
+            for j, conv in enumerate(conversations):
+                role = conv.get('role', 'Unknown')
+                content = conv.get('content', 'No content')
+                console.print(Panel(Syntax(content, "markdown"), title=f"Conversation {j+1} - {role}", expand=False))
+            
+            console.print(f"[bold green]Model:[/bold green] {model}")
+            console.print(f"[bold green]YAML File:[/bold green] {yaml_file}")
+            console.print("\n")
+
 def main():
     parser = argparse.ArgumentParser(description='Code Dataset CLI')
     subparsers = parser.add_subparsers(dest='command', help='Sub-command help')
@@ -122,6 +155,10 @@ def main():
     subparsers.add_parser('refresh', help='Refresh data from repositories')
     subparsers.add_parser('count', help='Count data entries in all projects')
 
+    show_parser = subparsers.add_parser('show', help='Show data entries for a specific project')
+    show_parser.add_argument('project', type=str, help='Project name')
+    show_parser.add_argument('-n', type=int, default=1, help='Number of entries to show')
+
     args = parser.parse_args()
 
     if args.command == 'add':
@@ -130,6 +167,8 @@ def main():
         refresh_data()
     elif args.command == 'count':
         count_data()
+    elif args.command == 'show':
+        show_data(args.project, args.n)
     else:
         parser.print_help()
 
