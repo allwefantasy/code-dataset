@@ -4,6 +4,9 @@ import os
 import shutil
 from pathlib import Path
 import git
+from rich.console import Console
+
+console = Console()
 
 CONFIG_DIR = Path.home() / '.code_dataset'
 CONFIG_FILE = CONFIG_DIR / 'config.json'
@@ -24,9 +27,9 @@ def add_repository(url):
             f.seek(0)
             json.dump(config, f, indent=2)
             f.truncate()
-            print(f"Added repository: {url}")
+            console.print(f"Added repository: [bold green]{url}[/bold green]")
         else:
-            print(f"Repository already exists: {url}")
+            console.print(f"Repository already exists: [bold yellow]{url}[/bold yellow]")
 
 def refresh_data():
     ensure_config_dir()
@@ -52,9 +55,9 @@ def refresh_data():
             dest_dir = DATA_DIR / repo_name
             dest_dir.mkdir(parents=True, exist_ok=True)
             shutil.copy(source_file, dest_dir / 'data.jsonl')
-            print(f"Copied data from {repo_name} to {dest_dir}")
+            console.print(f"Copied data from [bold blue]{repo_name}[/bold blue] to [bold green]{dest_dir}[/bold green]")
         else:
-            print(f"No data file found in {repo_name}")
+            console.print(f"No data file found in [bold red]{repo_name}[/bold red]")
         
         # Clean up
         shutil.rmtree(temp_dir)
