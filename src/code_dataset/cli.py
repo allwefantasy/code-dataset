@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 import git
 from rich.console import Console
+from rich.table import Table
 
 console = Console()
 
@@ -89,6 +90,24 @@ def refresh_data():
         if is_git_repo(url):
             shutil.rmtree(temp_dir)
 
+def count_data():
+    table = Table(title="Data Count")
+    table.add_column("Project", style="cyan", no_wrap=True)
+    table.add_column("Count", style="magenta")
+
+    total_count = 0
+    for project_dir in DATA_DIR.iterdir():
+        if project_dir.is_dir():
+            data_file = project_dir / 'data.jsonl'
+            if data_file.exists():
+                with open(data_file, 'r') as f:
+                    count = sum(1 for _ in f)
+                total_count += count
+                table.add_row(project_dir.name, str(count))
+
+    table.add_row("Total", str(total_count), style="bold")
+    console.print(table)
+
 def main():
     parser = argparse.ArgumentParser(description='Code Dataset CLI')
     subparsers = parser.add_subparsers(dest='command', help='Sub-command help')
@@ -97,6 +116,7 @@ def main():
     add_parser.add_argument('url', type=str, help='Repository URL')
 
     subparsers.add_parser('refresh', help='Refresh data from repositories')
+    subparsers.add_parser('count', help='Count data entries in all projects')
 
     args = parser.parse_args()
 
@@ -104,6 +124,8 @@ def main():
         add_repository(args.url)
     elif args.command == 'refresh':
         refresh_data()
+    elif args.command == 'count':
+        count_data()
     else:
         parser.print_help()
 
