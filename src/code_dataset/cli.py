@@ -54,8 +54,7 @@ def refresh_data():
         config = json.load(f)
     
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    TEMP_DIR.mkdir(parents=True, exist_ok=True)
-    add_to_gitignore('repo_temp')
+    TEMP_DIR.mkdir(parents=True, exist_ok=True)    
     
     for url in config['repositories']:
         repo_name = url.split('/')[-1].replace('.git', '')
