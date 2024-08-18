@@ -87,17 +87,43 @@ code-dataset add https://github.com/example/repo.git --alias my-repo
 code-dataset add /path/to/local/repo
 ```
 
-3. Refresh all data:
+4. Refresh all data:
 
 ```bash
 code-dataset refresh
 ```
 
-4. Count data entries:
+5. Count data entries:
 
 ```bash
 code-dataset count
 ```
+
+### 📂 Data Location and Structure
+
+The collected data is stored in the `data/libs/project_repo` directory, with each project having its own subdirectory. The data for each project is stored in a `data.jsonl` file.
+
+Each line in the `data.jsonl` file represents a single JSON object with the following structure:
+
+```json
+{
+  "instruction": "The instruction for the task",
+  "conversations": [
+    {
+      "role": "user or assistant",
+      "content": "The content of the message"
+    },
+    ...
+  ],
+  "model": "The model used for generation",
+  "yaml_file": "The YAML file associated with this data"
+}
+```
+
+- `instruction`: The task instruction
+- `conversations`: An array of conversation messages, each with a `role` and `content`
+- `model`: The AI model used to generate the response
+- `yaml_file`: The YAML file associated with this data entry
 
 ## Contribution
 
