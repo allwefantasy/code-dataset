@@ -14,6 +14,34 @@ code_dataset is an open-source project for code programming datasets. Unlike oth
 
 ---
 
+## 📂 Data Location and Structure
+
+The collected data is stored in the `data/libs/project_repo` directory, with each project having its own subdirectory. The data for each project is stored in a `data.jsonl` file.
+
+Each line in the `data.jsonl` file represents a single JSON object with the following structure:
+
+```json
+{
+  "instruction": "The instruction for the task",
+  "conversations": [
+    {
+      "role": "user or assistant",
+      "content": "The content of the message"
+    },
+    ...
+  ],
+  "model": "The model used for generation",
+  "yaml_file": "The YAML file associated with this data"
+}
+```
+
+- `instruction`: The task instruction
+- `conversations`: An array of conversation messages, each with a `role` and `content`
+- `model`: The AI model used to generate the response
+- `yaml_file`: The YAML file associated with this data entry
+
+---
+
 ## 🛠 code-dataset Command Line Tool
 
 If your project uses [auto-coder.chat](https://auto-coder.chat), you can use the code-dataset command line tool to manage your local programming datasets. code-dataset is a convenient command line tool for collecting and managing programming datasets that can be submitted for external use.
@@ -99,31 +127,6 @@ code-dataset refresh
 code-dataset count
 ```
 
-### 📂 Data Location and Structure
-
-The collected data is stored in the `data/libs/project_repo` directory, with each project having its own subdirectory. The data for each project is stored in a `data.jsonl` file.
-
-Each line in the `data.jsonl` file represents a single JSON object with the following structure:
-
-```json
-{
-  "instruction": "The instruction for the task",
-  "conversations": [
-    {
-      "role": "user or assistant",
-      "content": "The content of the message"
-    },
-    ...
-  ],
-  "model": "The model used for generation",
-  "yaml_file": "The YAML file associated with this data"
-}
-```
-
-- `instruction`: The task instruction
-- `conversations`: An array of conversation messages, each with a `role` and `content`
-- `model`: The AI model used to generate the response
-- `yaml_file`: The YAML file associated with this data entry
 
 ## Contribution
 

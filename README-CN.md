@@ -14,6 +14,34 @@ code_dataset 是一个开源的代码编程数据集项目。与其他编程数�
 
 ---
 
+## 📂 数据位置和结构
+
+收集的数据存储在 `data/libs/project_repo` 目录中，每个项目都有自己的子目录。每个项目的数据存储在 `data.jsonl` 文件中。
+
+`data.jsonl` 文件中的每一行代表一个单独的 JSON 对象，结构如下：
+
+```json
+{
+  "instruction": "任务指令",
+  "conversations": [
+    {
+      "role": "用户或助手",
+      "content": "消息内容"
+    },
+    ...
+  ],
+  "model": "用于生成的模型",
+  "yaml_file": "与此数据相关的 YAML 文件"
+}
+```
+
+- `instruction`: 任务指令
+- `conversations`: 对话消息数组，每条消息包含 `role` 和 `content`
+- `model`: 用于生成响应的 AI 模型
+- `yaml_file`: 与此数据条目相关的 YAML 文件
+
+---
+
 ## 🛠 code-dataset 命令行工具
 
 如果你的项目使用了 [auto-coder.chat](https://auto-coder.chat) ，那么你可以使用 code-dataset 命令行工具来管理本地的编程数据集。
@@ -94,31 +122,7 @@ code-dataset count
 
 这个命令会统计所有项目中的数据条目，并显示一个汇总表。
 
-### 📂 数据位置和结构
 
-收集的数据存储在 `data/libs/project_repo` 目录中，每个项目都有自己的子目录。每个项目的数据存储在 `data.jsonl` 文件中。
-
-`data.jsonl` 文件中的每一行代表一个单独的 JSON 对象，结构如下：
-
-```json
-{
-  "instruction": "任务指令",
-  "conversations": [
-    {
-      "role": "用户或助手",
-      "content": "消息内容"
-    },
-    ...
-  ],
-  "model": "用于生成的模型",
-  "yaml_file": "与此数据相关的 YAML 文件"
-}
-```
-
-- `instruction`: 任务指令
-- `conversations`: 对话消息数组，每条消息包含 `role` 和 `content`
-- `model`: 用于生成响应的 AI 模型
-- `yaml_file`: 与此数据条目相关的 YAML 文件
 
 ## 贡献
 
