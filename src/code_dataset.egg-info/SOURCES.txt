@@ -1,0 +1,11 @@
+README.md
+setup.py
+src/code_dataset/__init__.py
+src/code_dataset/cli.py
+src/code_dataset.egg-info/PKG-INFO
+src/code_dataset.egg-info/SOURCES.txt
+src/code_dataset.egg-info/dependency_links.txt
+src/code_dataset.egg-info/entry_points.txt
+src/code_dataset.egg-info/not-zip-safe
+src/code_dataset.egg-info/requires.txt
+src/code_dataset.egg-info/top_level.txt

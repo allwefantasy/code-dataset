@@ -1,0 +1,2 @@
+[console_scripts]
+code-dataset = code_dataset.cli:main

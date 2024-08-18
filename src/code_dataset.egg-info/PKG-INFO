@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: code-dataset
+Version: 0.1.0
+Summary: A tool for managing code datasets
+Home-page: https://github.com/yourusername/code_dataset
+Author: WilliamZhu
+Author-email: allwefantsy@gmail.com
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: gitpython
