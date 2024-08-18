@@ -23,20 +23,18 @@ def ensure_config_dir():
         with open(CONFIG_FILE, 'w') as f:
             json.dump({"repositories": []}, f)
 
-def add_repository(url, alias=None):
+def add_repository(url):
     ensure_config_dir()
     with open(CONFIG_FILE, 'r+') as f:
         config = json.load(f)
-        repo_name = url.split('/')[-1].replace('.git', '')
-        alias = alias or repo_name
-        if alias not in [repo.get('alias') for repo in config['repositories']]:
-            config['repositories'].append({"url": url, "alias": alias})
+        if url not in config['repositories']:
+            config['repositories'].append(url)
             f.seek(0)
             json.dump(config, f, indent=2)
             f.truncate()
-            console.print(f"Added repository: [bold green]{url}[/bold green] with alias: [bold blue]{alias}[/bold blue]")
+            console.print(f"Added repository: [bold green]{url}[/bold green]")
         else:
-            console.print(f"Repository with alias [bold yellow]{alias}[/bold yellow] already exists")
+            console.print(f"Repository already exists: [bold yellow]{url}[/bold yellow]")
 
 def add_to_gitignore(path):
     gitignore_path = Path(os.getcwd()) / '.gitignore'
@@ -59,9 +57,8 @@ def refresh_data():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     TEMP_DIR.mkdir(parents=True, exist_ok=True)    
     
-    for repo in config['repositories']:
-        url = repo['url']
-        alias = repo['alias']
+    for url in config['repositories']:
+        repo_name = url.split('/')[-1].replace('.git', '')
         temp_dir = TEMP_DIR / repo_name
         
         if is_git_repo(url):
@@ -117,7 +114,6 @@ def main():
 
     add_parser = subparsers.add_parser('add', help='Add a repository URL')
     add_parser.add_argument('url', type=str, help='Repository URL')
-    add_parser.add_argument('--alias', type=str, help='Alias for the repository')
 
     subparsers.add_parser('refresh', help='Refresh data from repositories')
     subparsers.add_parser('count', help='Count data entries in all projects')
@@ -125,7 +121,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == 'add':
-        add_repository(args.url, args.alias)
+        add_repository(args.url)
     elif args.command == 'refresh':
         refresh_data()
     elif args.command == 'count':
