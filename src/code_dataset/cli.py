@@ -12,6 +12,9 @@ CONFIG_DIR = Path.home() / '.code_dataset'
 CONFIG_FILE = CONFIG_DIR / 'config.json'
 DATA_DIR = Path(os.getcwd()) / 'data' / 'libs'
 
+def is_git_repo(url):
+    return url.endswith('.git') or ':' in url
+
 def ensure_config_dir():
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     if not CONFIG_FILE.exists():
@@ -42,15 +45,23 @@ def refresh_data():
         repo_name = url.split('/')[-1].replace('.git', '')
         temp_dir = Path('/tmp') / repo_name
         
-        # Clone or pull the repository
-        if temp_dir.exists():
-            repo = git.Repo(temp_dir)
-            repo.remotes.origin.pull()
+        if is_git_repo(url):
+            # Clone or pull the repository
+            if temp_dir.exists():
+                repo = git.Repo(temp_dir)
+                repo.remotes.origin.pull()
+            else:
+                git.Repo.clone_from(url, temp_dir)
+            source_dir = temp_dir
         else:
-            git.Repo.clone_from(url, temp_dir)
+            # Local directory
+            source_dir = Path(url)
+            if not source_dir.exists():
+                console.print(f"[bold red]Error:[/bold red] Local directory not found: {url}")
+                continue
         
         # Copy the data file
-        source_file = temp_dir / '.auto-coder' / 'human_as_model_conversation' / 'data.jsonl'
+        source_file = source_dir / '.auto-coder' / 'human_as_model_conversation' / 'data.jsonl'
         if source_file.exists():
             dest_dir = DATA_DIR / repo_name
             dest_dir.mkdir(parents=True, exist_ok=True)
@@ -59,8 +70,9 @@ def refresh_data():
         else:
             console.print(f"No data file found in [bold red]{repo_name}[/bold red]")
         
-        # Clean up
-        shutil.rmtree(temp_dir)
+        # Clean up if it's a git repo
+        if is_git_repo(url):
+            shutil.rmtree(temp_dir)
 
 def main():
     parser = argparse.ArgumentParser(description='Code Dataset CLI')
