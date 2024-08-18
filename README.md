@@ -80,6 +80,14 @@ code-dataset add /path/to/local/repo
 code-dataset refresh
 ```
 
+3. 统计数据条目：
+
+```bash
+code-dataset count
+```
+
+这个命令会统计所有项目中的数据条目，并显示一个汇总表。
+
 然后你就可以通过 PR 的方式将本地的编程数据集提交到 code_dataset 中。
 
 ---
