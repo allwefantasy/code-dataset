@@ -7,7 +7,7 @@ code_dataset 是一个开源的代码编程数据集项目。与其他编程数�
 
 ## ✨ 特点
 
-- 🌟 来自实际开源项目的编程迭代
+- 🌟 数据集来自实际开源项目的编程迭代
 - 🤖 使用当前最先进的模型生成
 - 👨‍💻 经过资深研发人员审核
 - 💎 高质量、实用的代码示例
@@ -16,6 +16,7 @@ code_dataset 是一个开源的代码编程数据集项目。与其他编程数�
 
 ## 🛠 code-dataset 命令行工具
 
+如果你的项目使用了 [auto-coder.chat](https://auto-coder.chat) ，那么你可以使用 code-dataset 命令行工具来管理本地的编程数据集。
 code-dataset 是一个方便的命令行工具，用于收集和管理本地可以提交供外部使用的编程数据集。
 
 ### 📥 安装
@@ -31,6 +32,12 @@ cd code_dataset
 
 ```bash
 pip install -e .
+```
+
+或者
+
+```bash
+pip install code-dataset
 ```
 
 ### 🔧 使用方法
@@ -73,17 +80,13 @@ code-dataset add /path/to/local/repo
 code-dataset refresh
 ```
 
+然后你就可以通过 PR 的方式将本地的编程数据集提交到 code_dataset 中。
+
 ---
 
 ## 🤝 贡献
 
 我们欢迎并鼓励社区贡献。如果您有高质量的代码示例或改进建议，请提交 Pull Request 或开启 Issue。
-
----
-
-## 📄 许可证
-
-本项目采用 MIT 许可证。详情请参见 [LICENSE](LICENSE) 文件。
 
 ---
 
