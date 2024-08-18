@@ -1,103 +1,102 @@
 
 # 🚀 code_dataset
 
-code_dataset 是一个开源的代码编程数据集项目。与其他编程数据集不同，该数据集来自实际开源项目的编程迭代，使用当前最好的模型以及经过资深研发人员的审核。这确保了数据集的质量和实用性，为研究人员和开发者提供了宝贵的学习资源。
+code_dataset is an open-source project for code programming datasets. Unlike other programming datasets, this dataset comes from the programming iterations of actual open-source projects, using the best models currently available and being reviewed by senior developers. This ensures the quality and practicality of the dataset, providing valuable learning resources for researchers and developers.
 
 ---
 
-## ✨ 特点
+## ✨ Features
 
-- 🌟 数据集来自实际开源项目的编程迭代
-- 🤖 使用当前最先进的模型生成
-- 👨‍💻 经过资深研发人员审核
-- 💎 高质量、实用的代码示例
+- 🌟 Datasets come from the programming iterations of actual open-source projects
+- 🤖 Generated using the most advanced models currently available
+- 👨‍💻 Reviewed by senior developers
+- 💎 High-quality, practical code examples
 
 ---
 
-## 🛠 code-dataset 命令行工具
+## 🛠 code-dataset Command Line Tool
 
-如果你的项目使用了 [auto-coder.chat](https://auto-coder.chat) ，那么你可以使用 code-dataset 命令行工具来管理本地的编程数据集。
-code-dataset 是一个方便的命令行工具，用于收集和管理本地可以提交供外部使用的编程数据集。
+If your project uses [auto-coder.chat](https://auto-coder.chat), you can use the code-dataset command line tool to manage your local programming datasets. code-dataset is a convenient command line tool for collecting and managing programming datasets that can be submitted for external use.
 
-### 📥 安装
+### 📥 Installation
 
-1. 克隆项目仓库：
+1. Clone the project repository:
 
 ```bash
 git clone https://github.com/yourusername/code_dataset.git
 cd code_dataset
 ```
 
-2. 安装 code-dataset 工具：
+2. Install the code-dataset tool:
 
 ```bash
 pip install -e .
 ```
 
-或者
+or
 
 ```bash
 pip install code-dataset
 ```
 
-### 🔧 使用方法
+### 🔧 Usage
 
-code-dataset 工具提供了两个主要命令：
+The code-dataset tool provides two main commands:
 
-1. 添加仓库：
+1. Add a repository:
 
 ```bash
 code-dataset add <repository_url>
 ```
 
-这个命令用于添加一个 Git 仓库或本地目录到配置中。
+This command is used to add a Git repository or local directory to the configuration.
 
-2. 刷新数据：
+2. Refresh data:
 
 ```bash
 code-dataset refresh
 ```
 
-这个命令会从所有配置的仓库中获取最新的数据，并将其保存到本地的 `data/libs` 目录中。
+This command fetches the latest data from all configured repositories and saves it to the local `data/libs` directory.
 
-### 📚 示例
+### 📚 Examples
 
-1. 添加一个 Git 仓库：
+1. Add a Git repository:
 
 ```bash
 code-dataset add https://github.com/example/repo.git
 ```
 
-2. 添加一个本地目录：
+2. Add a local directory:
 
 ```bash
 code-dataset add /path/to/local/repo
 ```
 
-3. 刷新所有数据：
+3. Refresh all data:
 
 ```bash
 code-dataset refresh
 ```
 
-3. 统计数据条目：
+4. Count data entries:
 
 ```bash
 code-dataset count
 ```
 
-这个命令会统计所有项目中的数据条目，并显示一个汇总表。
+This command counts the data entries in all projects and displays a summary table.
 
-## 贡献
+## Contribution
 
-你就可以通过 PR 的方式将本地的编程数据集提交到 code_dataset 中
-
----
-
-## 🤝 贡献
-
-我们欢迎并鼓励社区贡献。如果您有高质量的代码示例或改进建议，请提交 Pull Request 或开启 Issue。
+You can submit your local programming datasets to code_dataset via PR.
 
 ---
 
-🌟 如果您觉得这个项目有帮助，请给我们一个 star！您的支持是我们持续改进的动力。
+## 🤝 Contribution
+
+We welcome and encourage community contributions. If you have high-quality code examples or improvement suggestions, please submit a Pull Request or open an Issue.
+
+---
+
+🌟 If you find this project helpful, please give us a star! Your support is the driving force for our continuous improvement.
