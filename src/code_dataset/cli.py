@@ -11,6 +11,7 @@ console = Console()
 CONFIG_DIR = Path.home() / '.code_dataset'
 CONFIG_FILE = CONFIG_DIR / 'config.json'
 DATA_DIR = Path(os.getcwd()) / 'data' / 'libs'
+TEMP_DIR = Path(os.getcwd()) / 'repo_temp'
 
 def is_git_repo(url):
     return url.endswith('.git') or ':' in url
@@ -34,16 +35,31 @@ def add_repository(url):
         else:
             console.print(f"Repository already exists: [bold yellow]{url}[/bold yellow]")
 
+def add_to_gitignore(path):
+    gitignore_path = Path(os.getcwd()) / '.gitignore'
+    if not gitignore_path.exists():
+        gitignore_path.touch()
+    
+    with open(gitignore_path, 'r+') as f:
+        content = f.read()
+        if path not in content:
+            if content and not content.endswith('\n'):
+                f.write('\n')
+            f.write(f'{path}\n')
+            console.print(f"Added [bold green]{path}[/bold green] to .gitignore")
+
 def refresh_data():
     ensure_config_dir()
     with open(CONFIG_FILE, 'r') as f:
         config = json.load(f)
     
     DATA_DIR.mkdir(parents=True, exist_ok=True)
+    TEMP_DIR.mkdir(parents=True, exist_ok=True)
+    add_to_gitignore('repo_temp')
     
     for url in config['repositories']:
         repo_name = url.split('/')[-1].replace('.git', '')
-        temp_dir = Path('/tmp') / repo_name
+        temp_dir = TEMP_DIR / repo_name
         
         if is_git_repo(url):
             # Clone or pull the repository
