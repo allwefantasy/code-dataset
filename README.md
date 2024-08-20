@@ -127,6 +127,19 @@ code-dataset refresh
 code-dataset count
 ```
 
+6. Show data entries for a specific project:
+
+```bash
+code-dataset show <project_name> [-n <number_of_entries>]
+```
+
+This command displays data entries for a specific project. You can specify the number of entries to show using the `-n` parameter. If not specified, it will show 1 entry by default.
+
+Example:
+```bash
+code-dataset show my-project -n 3
+```
+This will show 3 data entries from the 'my-project' dataset.
 
 ## Contribution
 

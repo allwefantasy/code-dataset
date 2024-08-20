@@ -122,7 +122,19 @@ code-dataset count
 
 这个命令会统计所有项目中的数据条目，并显示一个汇总表。
 
+6. 显示特定项目的数据条目：
 
+```bash
+code-dataset show <project_name> [-n <number_of_entries>]
+```
+
+这个命令用于显示特定项目的数据条目。你可以使用 `-n` 参数指定要显示的条目数量。如果不指定，默认显示1条。
+
+示例：
+```bash
+code-dataset show my-project -n 3
+```
+这将显示 'my-project' 数据集中的3条数据条目。
 
 ## 贡献
 
